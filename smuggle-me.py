@@ -19,7 +19,10 @@ def render_template_from_file(template_path, template_filename, *args, **kwargs)
     return template.render(*args, **kwargs)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate an HTML Smuggled Delivery Payload")
+    parser = argparse.ArgumentParser(
+        description="Generate an HTML Smuggled Delivery Payload",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
     parser.add_argument('-p', '--payload', type=argparse.FileType('rb'), help="The payload to smuggle in the resulting HTML file", required=True)
     parser.add_argument('-t', '--template', default="templates/smuggle.html.j2")
     parser.add_argument('-m', '--mimetype', help="Force the mimetype of the file", default="application/octet-stream")
@@ -35,7 +38,6 @@ if __name__ == "__main__":
     tname = os.path.basename(tpath)
 
     filename = args.filename if args.filename else os.path.basename(args.payload.name)
-    # payload = args.payload.read().encode('unicode_escape').decode('utf-8')
     
     encryptor = encryptionMap.get(args.encrypt)
     ciphertext = base64.b64encode(encryptor.encrypt(args.payload.read(), args.key)).decode('utf-8')
