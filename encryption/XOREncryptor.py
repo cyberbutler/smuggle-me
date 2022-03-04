@@ -1,5 +1,5 @@
 from itertools import cycle
-def encrypt(self, plaintext, key, *args, **kwargs):
+def encrypt(plaintext, key, *args, **kwargs):
     if len(plaintext) > len(key):
         repeatingKey = ''.join(map(lambda p, k: k, plaintext, cycle(key))).encode('utf-8')
         zippedBytes = zip(*map(bytearray, [plaintext, repeatingKey]))
