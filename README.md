@@ -1,5 +1,5 @@
 # smuggle-me
-A Python HTML Smuggling 
+A Python HTML Smuggling Generation Script
 ```bash
 python3 smuggle-me.py -h
 usage: smuggle-me.py [-h] -p PAYLOAD [-t TEMPLATE] [-m MIMETYPE] [-o OUTPUT] [--filename FILENAME] [-e {xor,rc4,plaintext}] [-k KEY]
