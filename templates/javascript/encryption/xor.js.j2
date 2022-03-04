@@ -1,0 +1,16 @@
+function decrypt(key, ciphertext) {
+    if (key.length < ciphertext.length)  {
+        repeatingKey = key;
+        for (let i = key.length; i <= ciphertext.length - 1; i++) {
+            repeatingKey += key[i % key.length];
+        }
+        key = repeatingKey;
+    }
+
+    return key.split('').map(
+        function _(e, i) { return [e, ciphertext[i]] }
+    ).reduce(
+        function _(a,b) { return a + String.fromCharCode(b[0].charCodeAt() ^ b[1].charCodeAt())}, 
+        ''
+    )
+}

